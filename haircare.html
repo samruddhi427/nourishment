@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Haircare</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>Haircare <span class="cart-count" id="cart-count">0</span></header>
+<div class="container">
+
+    <div class="product">
+        <img src="images/shampoo.jpg" alt="Herbal Shampoo">
+        <h3>Herbal Shampoo</h3>
+        <p>₹180</p>
+        <button onclick='addToCart({"name": "Herbal Shampoo", "price": 180})'>Add to Cart</button>
+    </div>
+
+    <div class="product">
+        <img src="images/hair_oil.jpg" alt="Coconut Hair Oil">
+        <h3>Coconut Hair Oil</h3>
+        <p>₹120</p>
+        <button onclick='addToCart({"name": "Coconut Hair Oil", "price": 120})'>Add to Cart</button>
+    </div>
+
+    <div class="product">
+        <img src="images/hair_mask.jpg" alt="Protein Hair Mask">
+        <h3>Protein Hair Mask</h3>
+        <p>₹350</p>
+        <button onclick='addToCart({"name": "Protein Hair Mask", "price": 350})'>Add to Cart</button>
+    </div>
+
+    <div class="product">
+        <img src="images/conditioner.jpg" alt="Silky Conditioner">
+        <h3>Silky Conditioner</h3>
+        <p>₹200</p>
+        <button onclick='addToCart({"name": "Silky Conditioner", "price": 200})'>Add to Cart</button>
+    </div>
+
+    <div class="product">
+        <img src="images/hair_serum.jpg" alt="Hair Repair Serum">
+        <h3>Hair Repair Serum</h3>
+        <p>₹280</p>
+        <button onclick='addToCart({"name": "Hair Repair Serum", "price": 280})'>Add to Cart</button>
+    </div>
+
+</div>
+<script src="script.js"></script>
+</body>
+</html>
