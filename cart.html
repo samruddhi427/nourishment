@@ -1,20 +1,188 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Your Cart</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Nourish Nest - Your Cart</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #fce3ec, #ffe7e7);
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #d63384;
+      margin-bottom: 30px;
+    }
+
+    .cart-container {
+      max-width: 900px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #fff;
+      padding: 15px 20px;
+      border-radius: 16px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart-item .details {
+      flex: 1;
+    }
+
+    .cart-item h3 {
+      margin-bottom: 5px;
+      color: #8b005d;
+    }
+
+    .cart-item p {
+      margin: 0;
+    }
+
+    .cart-item .actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .remove-btn {
+      padding: 5px 10px;
+      background-color: #ff5d8f;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .remove-btn:hover {
+      background-color: #e64980;
+    }
+
+    .total {
+      text-align: right;
+      font-size: 22px;
+      font-weight: bold;
+      margin-top: 30px;
+      color: #333;
+    }
+
+    .payment-section {
+      margin-top: 30px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .payment-section h3 {
+      margin-bottom: 10px;
+      color: #d63384;
+    }
+
+    .payment-section label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    .btn-clear {
+      margin-top: 30px;
+      background-color: #ff5d8f;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: block;
+      margin-left: auto;
+    }
+
+    .btn-clear:hover {
+      background-color: #e64980;
+    }
+
+    @media (max-width: 600px) {
+      .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .cart-item .actions {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+      }
+    }
+  </style>
 </head>
-<body onload="loadCartPage()">
-<header>Your Cart <span class="cart-count" id="cart-count">0</span></header>
-<div class="container" id="cart-items"></div>
-<h2 style="padding: 20px;" id="total">Total: ₹0</h2>
-<div style="padding: 20px;">
+<body onload="loadCart()">
+  <h1>Your Cart</h1>
+  <div class="cart-container" id="cart-items"></div>
+  <div class="total" id="total">Total: ₹0</div>
+
+  <div class="payment-section">
     <h3>Choose Payment Method:</h3>
-    <label><input type="radio" name="payment"> UPI</label><br>
-    <label><input type="radio" name="payment"> Cash on Delivery</label>
-</div>
-<script src="script.js"></script>
+    <label><input type="radio" name="payment" value="upi"> UPI</label>
+    <label><input type="radio" name="payment" value="cod"> Cash on Delivery</label>
+    <button class="btn-clear" onclick="clearCart()">Clear Cart</button>
+  </div>
+
+  <script>
+    function loadCart() {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const container = document.getElementById("cart-items");
+      const totalBox = document.getElementById("total");
+      let total = 0;
+
+      container.innerHTML = "";
+
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        const div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerHTML = `
+          <div class="details">
+            <h3>${item.name}</h3>
+            <p>₹${item.price} × ${item.quantity}</p>
+          </div>
+          <div class="actions">
+            <p><strong>₹${itemTotal}</strong></p>
+            <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+
+      totalBox.innerText = `Total: ₹${total}`;
+    }
+
+    function removeItem(index) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      loadCart();
+    }
+
+    function clearCart() {
+      localStorage.removeItem("cart");
+      loadCart();
+    }
+  </script>
 </body>
 </html>
+
